@@ -1,4 +1,4 @@
-from homeassistant.core import HomeAssistant, ServiceCall
+from homeassistant.core import HomeAssistant, ServiceCall, SupportsResponse
 from homeassistant.helpers.typing import ConfigType
 import voluptuous as vol
 
@@ -17,6 +17,9 @@ async def async_setup(hass: HomeAssistant, config: ConfigType):
         event_type = call.data.get("event_type")
         event_data = call.data.get("event_data")
         hass.bus.async_fire(event_type, event_data)
+        return {"event": event_type, "sent": True}
 
-    hass.services.async_register(DOMAIN, "fire", handle_fire, CALL_SCHEMA)
+    hass.services.async_register(
+        DOMAIN, "fire", handle_fire, CALL_SCHEMA, supports_response=SupportsResponse.OPTIONAL
+    )
     return True

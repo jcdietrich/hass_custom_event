@@ -16,3 +16,8 @@ fire:
       example: '{"attribute1": 1, "attribute2": "test"}'
       selector:
         object:
+  response:
+    event:
+      description: The event type that was fired
+    sent:
+      description: Confirmation that the event was fired
